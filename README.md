@@ -76,6 +76,8 @@ docker push <AWS_ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/lambda-tensorflow-ex
 
 ### AWS Lambda
 
+#### Creating Lambda Function (First Time)
+
 1. On the Lambda console, choose Functions.
 2. Choose Create function.
 3. Select Container image.
@@ -83,6 +85,13 @@ docker push <AWS_ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/lambda-tensorflow-ex
 5. For Container image URI, enter the earlier created lambda-tensorflow-example repository.
 6. Configure the instance to have 1024 MB of space and 3 min timeout.
 7. Configure the security group of the Lambda Instance to have S3 Read only access.
+
+#### Updating Lambda Function (First Time)
+
+1. On the Lambda Function, select "Deploy new image"
+2. Select "Browse images"
+3. Pick the created ECR image repository
+4. Select the latest image tag accordingly, save and deploy
 
 ## Running the Instance
 
@@ -97,10 +106,10 @@ To run the Lambda function, there are 2 different ways of doing it
     {
       "s3": {
         "bucket": {
-          "name": "recycle-able-image",
+          "name": "recycle-able-image"
         },
         "object": {
-          "key": "2.jpg",
+          "key": "2.jpg"
         }
       }
     }

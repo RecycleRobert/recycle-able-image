@@ -59,11 +59,20 @@ def lambda_handler(event, context):
         test_img = test_img.astype('float32')
         test_img /= 255
         model = load_model(mdl)
-        resArr.append(np.round(model.predict(test_img), decimals=3))
+        resArr.append(np.round(model.predict(test_img), decimals=3).tolist())
 
+    parsed_input = json.dumps({
+        "box": resArr[0],
+        "glass_bottle": resArr[1],
+        "soda_cans": resArr[2],
+        "crushed_soda_cans": resArr[3],
+        "plastic_bottle": resArr[4],
+    })
+
+    print(resArr)
     return {
         'statusCode': 200,
-        'body': json.dumps(resArr)
+        'body': parsed_input
     }
 
 
