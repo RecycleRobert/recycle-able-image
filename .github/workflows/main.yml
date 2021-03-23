@@ -49,3 +49,14 @@ jobs:
           docker build -t  lambda-tensorflow-example .
           docker tag lambda-tensorflow-example:latest 650650690440.dkr.ecr.us-east-1.amazonaws.com/lambda-tensorflow-example:latest
           docker push 650650690440.dkr.ecr.us-east-1.amazonaws.com/lambda-tensorflow-example:latest
+          
+      - name: Deploy to Lambda
+        uses: appleboy/lambda-action@master
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: us-east-1
+          function_name: test2
+          image_uri: 650650690440.dkr.ecr.us-east-1.amazonaws.com/lambda-tensorflow-example
+          memory_size: 1024
+          timeout: 360
