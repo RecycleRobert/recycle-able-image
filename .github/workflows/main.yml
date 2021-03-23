@@ -57,6 +57,6 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: us-east-1
           function_name: test2
-          image_uri: 650650690440.dkr.ecr.us-east-1.amazonaws.com/lambda-tensorflow-example
+          image_uri: 650650690440.dkr.ecr.us-east-1.amazonaws.com/lambda-tensorflow-example:latest
           memory_size: 1024
           timeout: 360
