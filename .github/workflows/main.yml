@@ -36,6 +36,16 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
           
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Logged in?
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        
+      - name: Build, tag, and push image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: my-ecr-repo
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t  lambda-tensorflow-example .
+          docker tag lambda-tensorflow-example:latest 650650690440.dkr.ecr.us-east-1.amazonaws.com/lambda-tensorflow-example:latest
+          docker push 650650690440.dkr.ecr.us-east-1.amazonaws.com/lambda-tensorflow-example:latest
