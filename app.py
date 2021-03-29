@@ -31,8 +31,6 @@ s3 = boto3.resource('s3')
 
 def lambda_handler(event, context):
     resArr = []
-
-    print("Lambda Handler 11")
     bucket_name = event['Records'][0]['s3']['bucket']['name']
     key = event['Records'][0]['s3']['object']['key']
     print("Bucket Name: ", bucket_name, " Key: ", key)
@@ -40,16 +38,10 @@ def lambda_handler(event, context):
     downloadModelFromBucket(bucket_name)
     readImageFromBucket(key, bucket_name)
 
-    print("Success Download")
-    print("OS List Dir", os.listdir("/tmp/"))
+    print("Success Download, OS List Dir", os.listdir("/tmp/"))
 
     # img = readImageFromBucket(key, bucket_name).resize(IMAGE_SHAPE)
     # img = np.array(img)/255.0
-
-    print("Read Image")
-
-    # prediction = model.predict(img[np.newaxis, ...])
-    # predicted_class = imagenet_labels[np.argmax(prediction[0], axis=-1)]
 
     # print('ImageName: {0}, Prediction: {1}'.format(key, predicted_class))
     for mdl in model_paths:
@@ -64,7 +56,7 @@ def lambda_handler(event, context):
         test_img /= 255
         model = load_model(mdl)
         res = np.round(model.predict(test_img), decimals=3).tolist();
-        print(res)
+        # print(res)
         resArr.append(res)
 
     parsed_input = json.dumps({
@@ -88,8 +80,8 @@ def readImageFromBucket(key, bucket_name):
     # print("key")
     # print(key)
     # response = object.get()
-
     # return Image.open(response['Body'])
+    
     print(key, '/tmp/' + key)
     client.download_file(bucket_name, key,
                          '/tmp/' + key)
