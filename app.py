@@ -36,7 +36,9 @@ def lambda_handler(event, context):
     print("Bucket Name: ", bucket_name, " Key: ", key)
 
     downloadModelFromBucket(bucket_name)
+    print("Downloaded models")
     readImageFromBucket(key, bucket_name)
+    print("Downloaded image")
 
     print("Success Download, OS List Dir", os.listdir("/tmp/"))
 
@@ -88,13 +90,18 @@ def readImageFromBucket(key, bucket_name):
 
 
 def downloadModelFromBucket(bucket_name):
+    print("1")
     client.download_file(bucket_name, 'model_0_prime.h5',
                          '/tmp/model_0_prime.h5')
+    print("2")
     client.download_file(bucket_name, 'model_1_prime.h5',
                          '/tmp/model_1_prime.h5')
+    print("3")
     client.download_file(bucket_name, 'model_2_prime.h5',
                          '/tmp/model_2_prime.h5')
+    # print("4")
     # client.download_file(bucket_name, 'model_3_prime.h5',
     #                      '/tmp/model_3_prime.h5')
+    print("5")
     client.download_file(bucket_name, 'model_4_prime.h5',
                          '/tmp/model_4_prime.h5')
